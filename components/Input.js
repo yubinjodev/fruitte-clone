@@ -6,7 +6,7 @@ const Input = ({ text, handleChange, holder, password }) => {
     <TextInput
       style={styles.input}
       value={text}
-      onCHangeText={handleChange}
+      onChangeText={handleChange}
       placeholder={holder}
       secureTextEntry={password}
     />

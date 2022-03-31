@@ -1,9 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import auth from "@react-native-firebase/auth";
+
 import Input from "./../components/Input";
 import Button from "./../components/Button";
 
 const SignUp = ({ navigation }) => {
+  const [user, setUser] = useState("");
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSignUp = (e) => {
+    e.preventDefault();
+    auth()
+      .createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        setUser(auth.currentUser);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+      });
+  };
+
+  //TODO:https://www.youtube.com/watch?v=ql4J6SpLXZA
   return (
     <View style={styles.container}>
       <Text style={styles.header}>
@@ -11,13 +33,33 @@ const SignUp = ({ navigation }) => {
       </Text>
 
       <View>
-        <Input holder="이름" password={false} />
-        <Input holder="전화번호" password={false} />
-        <Input holder="이메일" password={false} />
-        <Input holder="비밀번호" password={true} />
-        <Input holder="비밀번호 재확인" password={true} />
+        <Input
+          text={name}
+          handleChange={(text) => setName(text)}
+          holder="이름"
+          password={false}
+        />
+        <Input
+          text={phone}
+          handleChange={(text) => setPhone(text)}
+          holder="전화번호"
+          password={false}
+        />
+        <Input
+          text={email}
+          handleChange={(text) => setEmail(text)}
+          holder="이메일"
+          password={false}
+        />
+        <Input
+          text={password}
+          handleChange={(text) => setPassword(text)}
+          holder="비밀번호"
+          password={true}
+        />
+        <Input text={password} holder="비밀번호 재확인" password={true} />
       </View>
-      <Button text="회원가입" />
+      <Button handlePress={handleSignUp} text="회원가입" />
 
       <View style={styles.concat}>
         <Text style={styles.signUp}>이미 계정이 있으신가요?</Text>
