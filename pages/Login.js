@@ -11,7 +11,7 @@ const Login = ({ navigation }) => {
       <View>
         <Input holder="이메일/ID" password={false} />
         <Input holder="비밀번호" password={true} />
-        <View style={styles.concat}>
+        <View>
           <Text style={{ float: "left" }}>둘러보기</Text>
           <Text style={{ float: "right" }}>비밀번호 찾기</Text>
         </View>
@@ -20,7 +20,7 @@ const Login = ({ navigation }) => {
 
       <View style={styles.concat}>
         <Text style={styles.signUp}>아직 계정이 없으신가요?</Text>
-        <TouchableOpacity onPress={() => navigation.navigate(`Sign Up`)}>
+        <TouchableOpacity onPress={() => navigation.navigate("Sign Up")}>
           <Text style={styles.signUpRedirect}> 회원가입 하러가기</Text>
         </TouchableOpacity>
       </View>
@@ -40,10 +40,16 @@ const styles = StyleSheet.create({
     lineHeight: 32,
     textAlign: "center",
     color: "#4C9C2E",
+    marginTop: 100,
   },
   concat: {
     display: "flex",
     flexDirection: "row",
+    position: "absolute",
+    width: 300,
+    height: 20,
+    left: 48,
+    top: 768,
   },
   signUp: {
     fontFamily: "NanumSquareRound",
