@@ -3,14 +3,16 @@ import { StyleSheet, View, Text, Image } from "react-native";
 import successIcon from "../assets/successIcon.png";
 import Button from "../components/Button";
 
-const Home = ({ navigation, user }) => {
+const Home = ({ route, navigation }) => {
+  const user = route.params.user;
+
   return (
     <View style={styles.container}>
       <View style={styles.popup}>
         <Text style={styles.header}>Welcome {user}!</Text>
         <Image style={styles.success} source={successIcon} />
         <Button
-          handlePress={navigation.navigate("Login")}
+          handlePress={() => navigation.navigate("Login")}
           sx={"normal"}
           text="로그아웃"
         />
@@ -44,10 +46,12 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     textAlign: "center",
     color: " #828282",
+    lineHeight: 30,
   },
   success: {
     width: 150,
     height: 152,
+    margin: 50,
   },
 });
 

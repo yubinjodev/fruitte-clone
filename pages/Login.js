@@ -1,34 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
-import auth from "@react-native-firebase/auth";
+import Toast from "react-native-toast-message";
+
+import { auth } from "../firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 import Button from "../components/Button";
 import Input from "../components/Input";
 
 const Login = ({ navigation }) => {
+  const [user, setUser] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const loginHandle = (e) => {
-    e.preventDefault();
-    auth()
-      .signInWithEmailAndPassword(email, password)
+  const success = () => {
+    Toast.show({
+      type: "success",
+      text1: "Success",
+      text2: "✅ Logged In Successfully",
+      visibilityTime: 2000,
+    });
+  };
+
+  const loginHandle = () => {
+    signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
+        success();
         const user = userCredential.user;
-        alert("sign");
+        setUser(user);
+        navigation.navigate("Home", { user: user.email });
       })
       .catch((error) => {
-        if (error.code === "auth/email-already-in-use") {
-          console.log("That email address is already in use!");
-        }
-
-        if (error.code === "auth/invalid-email") {
-          console.log("That email address is invalid!");
-        }
-
-        console.error(error);
+        const errorCode = error.code;
+        const errorMessage = error.message;
       });
   };
+
+  useEffect(() => {
+    return () => {
+      setEmail("");
+      setPassword("");
+    };
+  }, [user]);
   return (
     <View style={styles.container}>
       <Text style={styles.header}>프루떼에 오신것을 환영합니다</Text>
@@ -48,11 +61,7 @@ const Login = ({ navigation }) => {
         />
         <View></View>
 
-        <Button
-          sx={"normal"}
-          text="로그인"
-          handlePress={(e) => loginHandle(e)}
-        />
+        <Button sx={"normal"} text="로그인" handlePress={loginHandle} />
         <View>
           <Text style={styles.smallText}>비밀번호 찾기</Text>
         </View>

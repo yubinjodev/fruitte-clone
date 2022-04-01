@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import auth from "@react-native-firebase/auth";
+import Toast from "react-native-toast-message";
+
+import { auth } from "../firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 import Input from "./../components/Input";
 import Button from "./../components/Button";
@@ -12,21 +15,35 @@ const SignUp = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // const handleSignUp = (e) => {
-  //   navigation.navigate("Home");
-  //   // e.preventDefault();
-  //   // auth()
-  //   //   .createUserWithEmailAndPassword(auth, email, password)
-  //   //   .then((userCredential) => {
-  //   //     setUser(auth.currentUser);
-  //   //   })
-  //   //   .catch((error) => {
-  //   //     const errorCode = error.code;
-  //   //     const errorMessage = error.message;
-  //   //   });
-  // };
+  const success = () => {
+    Toast.show({
+      type: "success",
+      text1: "Success",
+      text2: "✅ Signed Up Successfully",
+      visibilityTime:2000
+    });
+  };
 
-  //TODO:https://www.youtube.com/watch?v=ql4J6SpLXZA
+  const handleSignUp = () => {
+    createUserWithEmailAndPassword(auth, email, password).then(
+      (userCredential) => {
+        success();
+        const user = userCredential.user;
+        setUser(user);
+        navigation.navigate("Login");
+      }
+    );
+  };
+
+  useEffect(() => {
+    return () => {
+      setName("");
+      setPhone("");
+      setEmail("");
+      setPassword("");
+    };
+  }, [user]);
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>
@@ -60,11 +77,7 @@ const SignUp = ({ navigation }) => {
         />
         <Input text={password} holder="비밀번호 재확인" password={true} />
       </View>
-      <Button
-        sx={"normal"}
-        handlePress={() => navigation.navigate("Home")}
-        text="회원가입"
-      />
+      <Button sx={"normal"} handlePress={handleSignUp} text="회원가입" />
 
       <View style={styles.concat}>
         <Text style={styles.signUp}>이미 계정이 있으신가요?</Text>

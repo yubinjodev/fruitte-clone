@@ -27,6 +27,7 @@
     "react-native-reanimated": "^2.5.0",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "~3.10.1",
+    "react-native-toast-message": "^2.1.5",
     "react-native-web": "0.17.1",
     "regjsparser": "^0.8.4",
     "resolve": "^1.22.0"
