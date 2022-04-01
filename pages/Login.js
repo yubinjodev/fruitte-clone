@@ -46,11 +46,29 @@ const Login = ({ navigation }) => {
           holder="비밀번호"
           password={true}
         />
+        <View></View>
+
+        <Button
+          sx={"normal"}
+          text="로그인"
+          handlePress={(e) => loginHandle(e)}
+        />
         <View>
-          <Text style={{ float: "left" }}>둘러보기</Text>
-          <Text style={{ float: "right" }}>비밀번호 찾기</Text>
+          <Text style={styles.smallText}>비밀번호 찾기</Text>
         </View>
-        <Button text="로그인" handlePress={(e) => loginHandle(e)} />
+      </View>
+
+      <View style={styles.buttonBreak}>
+        <View style={styles.linebreak}></View>
+        <Text style={styles.smallText}>또는</Text>
+        <View style={styles.linebreak}></View>
+      </View>
+
+      <View>
+        <Button sx={"apple"} text="Apple 로그인" />
+        <Button sx={"google"} text="Google 로그인" />
+        <Button sx={"kakao"} text="Kakao 로그인" />
+        <Button sx={"naver"} text="Naver 로그인" />
       </View>
 
       <View style={styles.concat}>
@@ -105,6 +123,26 @@ const styles = StyleSheet.create({
     alignItems: "center",
     textAlign: "center",
     color: "#4C9C2E",
+  },
+  smallText: {
+    fontFamily: "NanumSquareRound",
+    fontWeight: 400,
+    fontSize: 12,
+    lineHeight: 16,
+    display: "flex",
+    alignItems: "center",
+    color: "#828282",
+  },
+  buttonBreak: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  linebreak: {
+    border: "1px solid #828282",
+    width: 132,
+    margin: 20,
   },
 });
 

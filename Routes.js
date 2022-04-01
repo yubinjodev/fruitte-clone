@@ -16,6 +16,7 @@ export const Routes = () => {
     >
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Sign Up" component={SignUp} />
+      <Stack.Screen name="Home" component={Home} />
     </Stack.Navigator>
   );
 };

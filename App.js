@@ -9,9 +9,7 @@ import { Routes } from "./Routes";
 
 export default function App() {
   return (
-    // <View style={styles.container}>
-    //   <Login />
-    // </View>
+    
     <NavigationContainer>
       <Routes />
     </NavigationContainer>

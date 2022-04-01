@@ -12,18 +12,19 @@ const SignUp = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSignUp = (e) => {
-    e.preventDefault();
-    auth()
-      .createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        setUser(auth.currentUser);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-      });
-  };
+  // const handleSignUp = (e) => {
+  //   navigation.navigate("Home");
+  //   // e.preventDefault();
+  //   // auth()
+  //   //   .createUserWithEmailAndPassword(auth, email, password)
+  //   //   .then((userCredential) => {
+  //   //     setUser(auth.currentUser);
+  //   //   })
+  //   //   .catch((error) => {
+  //   //     const errorCode = error.code;
+  //   //     const errorMessage = error.message;
+  //   //   });
+  // };
 
   //TODO:https://www.youtube.com/watch?v=ql4J6SpLXZA
   return (
@@ -59,7 +60,11 @@ const SignUp = ({ navigation }) => {
         />
         <Input text={password} holder="비밀번호 재확인" password={true} />
       </View>
-      <Button handlePress={handleSignUp} text="회원가입" />
+      <Button
+        sx={"normal"}
+        handlePress={() => navigation.navigate("Home")}
+        text="회원가입"
+      />
 
       <View style={styles.concat}>
         <Text style={styles.signUp}>이미 계정이 있으신가요?</Text>
