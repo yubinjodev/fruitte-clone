@@ -14,25 +14,50 @@ const SignUp = ({ navigation }) => {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [repassword, setRepassword] = useState("");
 
   const success = () => {
     Toast.show({
       type: "success",
       text1: "Success",
       text2: "✅ Signed Up Successfully",
-      visibilityTime:2000
+      visibilityTime: 2000,
+    });
+  };
+
+  const fail = () => {
+    Toast.show({
+      type: "error",
+      text1: "Error",
+      text2: "❌ Please check your passowrd",
+      visibilityTime: 2000,
     });
   };
 
   const handleSignUp = () => {
-    createUserWithEmailAndPassword(auth, email, password).then(
-      (userCredential) => {
-        success();
-        const user = userCredential.user;
-        setUser(user);
-        navigation.navigate("Login");
-      }
-    );
+    if (checkPassword()) {
+      success();
+      createUserWithEmailAndPassword(auth, email, password).then(
+        (userCredential) => {
+          success();
+          const user = userCredential.user;
+          setUser(user);
+          navigation.navigate("Login");
+        }
+      );
+    } else {
+      fail();
+      setPassword("");
+      setRepassword("");
+    }
+  };
+
+  const checkPassword = () => {
+    if (password.localeCompare(repassword) == 0) {
+      return true;
+    } else {
+      return false;
+    }
   };
 
   useEffect(() => {
@@ -75,7 +100,12 @@ const SignUp = ({ navigation }) => {
           holder="비밀번호"
           password={true}
         />
-        <Input text={password} holder="비밀번호 재확인" password={true} />
+        <Input
+          text={repassword}
+          handleChange={(text) => setRepassword(text)}
+          holder="비밀번호 재확인"
+          password={true}
+        />
       </View>
       <Button sx={"normal"} handlePress={handleSignUp} text="회원가입" />
 
