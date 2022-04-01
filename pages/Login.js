@@ -12,7 +12,6 @@ const Login = ({ navigation }) => {
   const [user, setUser] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  
 
   const success = () => {
     Toast.show({
@@ -31,9 +30,18 @@ const Login = ({ navigation }) => {
         setUser(user);
         navigation.navigate("Home", { user: user.email });
       })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
+      .catch((err) => {
+        switch (err.code) {
+          case "auth/invalid-email":
+          case "auth/user-disabled":
+          case "auth/user-not-found":
+            console.log("Invalid credentials");
+            // setEmailError(err.message);
+            break;
+          case "auth/wrong-password":
+            console.log("Invalid credentials");
+            break;
+        }
       });
   };
 
@@ -63,9 +71,6 @@ const Login = ({ navigation }) => {
         <View></View>
 
         <Button sx={"normal"} text="로그인" handlePress={loginHandle} />
-        <View>
-          <Text style={styles.smallText}>비밀번호 찾기</Text>
-        </View>
       </View>
 
       <View style={styles.buttonBreak}>

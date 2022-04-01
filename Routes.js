@@ -6,27 +6,28 @@ import Login from "./pages/Login";
 import Home from "./pages/Home";
 
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./firebase";
 
 const Stack = createStackNavigator();
 
 export const Routes = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
+  // const [loggedIn, setLoggedIn] = useState(false);
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
-        const uid = user.uid;
-        console.log(uid);
-        // ...
-      } else {
-        // User is signed out
-        // ...
-      }
-    });
-  }, []);
+  // useEffect(() => {
+  //   onAuthStateChanged(auth, (user) => {
+  //     if (user) {
+  //       // User is signed in, see docs for a list of available properties
+  //       // https://firebase.google.com/docs/reference/js/firebase.User
+  //       const uid = user.uid;
+  //       console.log(uid);
+  //       setLoggedIn(!loggedIn);
+  //       console.log(loggedIn);
+  //       // ...
+  //     } else {
+  //       // User is signed out
+  //       // ...
+  //     }
+  //   });
+  // }, []);
 
   return (
     <Stack.Navigator

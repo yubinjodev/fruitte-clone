@@ -1,10 +1,24 @@
 import React from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
+
+import { signOut } from "firebase/auth";
+import { auth } from "./../firebase";
+
 import successIcon from "../assets/successIcon.png";
 import Button from "../components/Button";
 
 const Home = ({ route, navigation }) => {
   const user = route.params.user;
+
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => {
+        navigation.navigate("Login");
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
 
   return (
     <View style={styles.container}>
